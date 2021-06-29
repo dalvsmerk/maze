@@ -6,7 +6,6 @@ import { MazeValidationPipe } from './pipes/maze-validation.pipe';
 
 @Controller('maze')
 export class MazeController {
-
   constructor(private readonly mazeService: MazeService) {}
 
   @Post()
