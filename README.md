@@ -28,6 +28,9 @@ $ docker run -p 3000:3000 -d votendo/maze
 ## Testing
 
 ```bash
-# run after installed in development mode
+# run unit tests after installed in development mode
 $ docker run --rm=false votendo/maze npm run test
+
+# run e2e after installed in development mode
+$ docker run --rm=false votendo/maze npm run test:e2e
 ```
