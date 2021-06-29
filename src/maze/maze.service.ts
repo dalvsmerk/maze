@@ -16,14 +16,16 @@ export class MazeService {
 
     const binaryGrid = grid.map(stringCellToBinary);
 
+    // Snake uses cartesian coordinates, [0,0] is bottom left, not top left
     const mazeSolver = new Snake();
     const solution = mazeSolver.solve({
       maze: binaryGrid,
-      start: [0, 0],
-      end: [grid[0].length - 1, grid.length - 1],
+      start: [0, grid.length - 1],
+      end: [grid[0].length - 1, 0],
       heuristic: 'manhattan',
     });
 
-    return solution.cost;
+    // Cost includes the initial position
+    return solution.cost - 1;
   }
 }

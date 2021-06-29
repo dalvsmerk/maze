@@ -107,7 +107,7 @@ describe('MazeController (e2e)', () => {
       .send(maze)
       .expect(200)
       .expect({
-        min_steps_to_pass: 2,
+        minStepsToPass: 2,
     });
   });
 
@@ -123,7 +123,7 @@ describe('MazeController (e2e)', () => {
       .send(maze)
       .expect(200)
       .expect({
-        min_steps_to_pass: 4,
+        minStepsToPass: 4,
     });
   });
 
@@ -141,7 +141,7 @@ describe('MazeController (e2e)', () => {
       .send(maze)
       .expect(200)
       .expect({
-        min_steps_to_pass: 9,
+        minStepsToPass: 9,
     });
   });
 
@@ -161,7 +161,7 @@ describe('MazeController (e2e)', () => {
       .send(maze)
       .expect(200)
       .expect({
-        min_steps_to_pass: 12,
+        minStepsToPass: 12,
     });
   });
 });
