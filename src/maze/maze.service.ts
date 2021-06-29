@@ -1,12 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { MazeDTO } from './dto/maze.dto';
 const Snake = require('snake');
 
 @Injectable()
 export class MazeService {
-  // TODO: Caching
-  public findMinimumStepsToPass(mazeDTO: MazeDTO): number {
+
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+
+  public async findMinimumStepsToPass(mazeDTO: MazeDTO): Promise<number> {
     const { grid } = mazeDTO;
+
+    const mazeCacheKey = this.mazeToCacheKey(grid);
+    const cachedCost: number | undefined = await this.cacheManager.get(mazeCacheKey);
+
+    if (cachedCost) return cachedCost;
 
     const stringCellToBinary = (row: string[]): number[] =>
       row.map((cell: string): number => {
@@ -26,6 +34,16 @@ export class MazeService {
     });
 
     // Cost includes the initial position
-    return solution.cost - 1;
+    const cost = solution.cost - 1;
+
+    if (!cachedCost) {
+      await this.cacheManager.set(mazeCacheKey, cachedCost, { ttl: null });
+    }
+
+    return cost;
+  }
+
+  private mazeToCacheKey(grid: string[][]): string {
+    return grid.reduce((acc: string, row: string[]): string => acc + row.join(''), '');
   }
 }

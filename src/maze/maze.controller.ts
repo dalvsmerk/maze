@@ -12,8 +12,8 @@ export class MazeController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new MazeValidationPipe())
-  getMinimumStepsToPass(@Body() mazeDTO: MazeDTO): MazeSolutionRO {
-    const minStepsToPass = this.mazeService.findMinimumStepsToPass(mazeDTO);
-    return { minStepsToPass } as MazeSolutionRO;
+  async getMinimumStepsToPass(@Body() mazeDTO: MazeDTO): Promise<MazeSolutionRO> {
+    const minStepsToPass = await this.mazeService.findMinimumStepsToPass(mazeDTO);
+    return { minStepsToPass };
   }
 }
